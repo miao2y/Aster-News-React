@@ -7,6 +7,7 @@ import {Sidebar} from "../components/Sidebar";
 import {useHistory, useLocation} from "react-router";
 import {ArticleCard} from "../components/ArticleCard";
 import {HeaderLogo} from "../components/HeaderLogo";
+import {Footer} from "../components/Footer";
 
 /**
  * 首页
@@ -18,8 +19,6 @@ export function MyArticlePage() {
     // 为文章设置默认值,默认值为假数据
     const [data, setData] = useState(defaultArticleList);
 
-    // 当前选中的 Tag
-    const history = useHistory();
     useEffect(() => {
         /**
          * 查询我的文章列表接口
@@ -77,9 +76,7 @@ export function MyArticlePage() {
                         <section className="home__stories stories-module">
                             <h1 className="stories-module__title">我的文章</h1>
                             <div className="stories-module__items">
-                                {data.map((i) => <ArticleCard article={i} onClick={() => {
-                                        history.push(`/article/${i.id}`);
-                                    }}/>
+                                {data.map((i) => <ArticleCard article={i}/>
                                 )}
                             </div>
                         </section>
@@ -91,15 +88,7 @@ export function MyArticlePage() {
             </div>
         </main>
         <footer className="footer">
-            <div className="footer__container">
-                <div className="footer__body">
-                    <div className="footer__copy">© Aster News, 2022</div>
-                    <div className="footer__menu menu-footer">
-                        <a href="" className="menu-footer__link">Privacy Policy</a>
-                        <a href="" className="menu-footer__link">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
+            <Footer/>
         </footer>
     </div>
 }

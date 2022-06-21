@@ -7,6 +7,7 @@ import {Sidebar} from "../components/Sidebar";
 import {useHistory, useLocation} from "react-router";
 import {ArticleCard} from "../components/ArticleCard";
 import {HeaderLogo} from "../components/HeaderLogo";
+import {Footer} from "../components/Footer";
 
 /**
  * 首页
@@ -49,7 +50,7 @@ export function HomePage() {
         }).then(r => {
             setData(r.data);
         }).catch(e => {
-            message.error("网络错误: " + e.message);
+            message.error("查询文章列表接口网络错误: " + e.message);
         })
     }, [tag, keyword])
 
@@ -119,10 +120,7 @@ export function HomePage() {
                                 )}
                             </div>
                             <div className="stories-module__items">
-                                {data.map((i) => <ArticleCard article={i} onClick={() => {
-                                        history.push(`/article/${i.id}`);
-                                    }}/>
-                                )}
+                                {data.map((i) => <ArticleCard article={i}/>)}
                             </div>
                         </section>
                     </div>
@@ -133,15 +131,7 @@ export function HomePage() {
             </div>
         </main>
         <footer className="footer">
-            <div className="footer__container">
-                <div className="footer__body">
-                    <div className="footer__copy">© Aster News, 2022</div>
-                    <div className="footer__menu menu-footer">
-                        <a href="" className="menu-footer__link">Privacy Policy</a>
-                        <a href="" className="menu-footer__link">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
+            <Footer/>
         </footer>
     </div>
 }

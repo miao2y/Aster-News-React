@@ -6,6 +6,7 @@ import Dragger from "antd/lib/upload/Dragger";
 import {InboxOutlined} from '@ant-design/icons';
 import axios from "axios";
 import {HeaderLogo} from "../components/HeaderLogo";
+import {Footer} from "../components/Footer";
 
 export function ArticleCreatePage() {
     const [title, setTitle] = useState();
@@ -36,7 +37,7 @@ export function ArticleCreatePage() {
         }).then(r => {
             setSummary(r.data.summary);
         }).catch(e => {
-            message.error("网络错误: " + e.message);
+            message.error("自动获得摘要网络错误: " + e.message);
         })
     }
 
@@ -62,7 +63,7 @@ export function ArticleCreatePage() {
         }).then(r => {
             setTags(r.data);
         }).catch(e => {
-            message.error("网络错误: " + e.message);
+            message.error("自动生成文章标签网络错误: " + e.message);
         })
     }
 
@@ -94,7 +95,7 @@ export function ArticleCreatePage() {
         }).then(r => {
             setTags(r.data);
         }).catch(e => {
-            message.error("网络错误: " + e.message);
+            message.error("保存文章接口网络错误: " + e.message);
         })
     }
 
@@ -222,15 +223,7 @@ export function ArticleCreatePage() {
             </div>
         </main>
         <footer className="footer">
-            <div className="footer__container">
-                <div className="footer__body">
-                    <div className="footer__copy">© Aster News, 2022</div>
-                    <div className="footer__menu menu-footer">
-                        <a href="" className="menu-footer__link">Privacy Policy</a>
-                        <a href="" className="menu-footer__link">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
+            <Footer/>
         </footer>
     </div>
 }

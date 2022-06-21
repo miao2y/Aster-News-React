@@ -1,12 +1,13 @@
 import {ContactUsCard} from "../components/ContactUsCard";
 import {Sidebar} from "../components/Sidebar";
-import {useLocation, useParams} from "react-router";
+import {useHistory, useLocation, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {defaultArticle, defaultArticleList} from "./defaultValue";
 import axios from "axios";
 import {message} from "antd";
 import {ArticleCard} from "../components/ArticleCard";
 import {HeaderLogo} from "../components/HeaderLogo";
+import {Footer} from "../components/Footer";
 
 export function ArticlePage() {
     const [data, setData] = useState(defaultArticle);
@@ -29,7 +30,7 @@ export function ArticlePage() {
         }).then(r => {
             setData(r.data);
         }).catch(e => {
-            message.error("网络错误: " + e.message);
+            message.error("查询文章详情网络错误: " + e.message);
         })
 
         /**
@@ -47,9 +48,9 @@ export function ArticlePage() {
         axios.post("http://CHANGE_THIS.com", {
             id: Number(params.id)
         }).then(r => {
-            setData(r.data);
+            setSuggestArticles(r.data);
         }).catch(e => {
-            message.error("网络错误: " + e.message);
+            message.error("列出相似文章网络错误: " + e.message);
         })
     }, [params])
 
@@ -57,16 +58,7 @@ export function ArticlePage() {
         <header className="header">
             <div className="header__container">
                 <HeaderLogo/>
-                <div className="header__body body-header">
-                    <form className="body-header__search search">
-                        <div className="search__body">
-                            <input autocomplete="off" type="text" name="form[]" data-error="Ошибка"
-                                   placeholder="Search for news.." className="search__input input"/>
-                            <button type="submit" className="search__button _icon-search"></button>
-                            <button type="button" className="search__icon _icon-search"></button>
-                        </div>
-                    </form>
-                </div>
+                <div className="header__body body-header"></div>
                 <div className="header__user user-header">
                     <div className="user-header__title">
                         <a className="user-header__profile _icon-user" href=""><span>My Profile</span></a>
@@ -121,15 +113,7 @@ export function ArticlePage() {
             </div>
         </main>
         <footer className="footer">
-            <div className="footer__container">
-                <div className="footer__body">
-                    <div className="footer__copy">© Aster News, 2022</div>
-                    <div className="footer__menu menu-footer">
-                        <a href="" className="menu-footer__link">Privacy Policy</a>
-                        <a href="" className="menu-footer__link">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
+            <Footer/>
         </footer>
     </div>
 }

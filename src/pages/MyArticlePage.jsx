@@ -4,7 +4,6 @@ import {message} from "antd";
 import {defaultArticleList} from "./defaultValue";
 import {ContactUsCard} from "../components/ContactUsCard";
 import {Sidebar} from "../components/Sidebar";
-import {useHistory, useLocation} from "react-router";
 import {ArticleCard} from "../components/ArticleCard";
 import {HeaderLogo} from "../components/HeaderLogo";
 import {Footer} from "../components/Footer";
@@ -25,13 +24,15 @@ export function MyArticlePage() {
          * todo: 对接接口
          * 参数:
          * {
-         *     keyword:keyword // 关键字查询
+         *     keyword: string // 关键字查询
          * }
          *
          * 返回:
          * 参考 defaultArticleList
          */
-        axios.post("http://CHANGE_THIS.com", {}).then(r => {
+        axios.post("http://CHANGE_THIS.com", {
+            keyword: keyword,
+        }).then(r => {
             setData(r.data);
         }).catch(e => {
             message.error("网络错误: " + e.message);
@@ -76,8 +77,7 @@ export function MyArticlePage() {
                         <section className="home__stories stories-module">
                             <h1 className="stories-module__title">我的文章</h1>
                             <div className="stories-module__items">
-                                {data.map((i) => <ArticleCard article={i}/>
-                                )}
+                                {data.map((i) => <ArticleCard article={i}/>)}
                             </div>
                         </section>
                     </div>

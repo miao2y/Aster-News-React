@@ -74,21 +74,6 @@ export function HomePage() {
                         <a className="user-header__profile _icon-user" href=""><span>My Profile</span></a>
                         <button className="user-header__arrow _icon-user-arrow" type="button"></button>
                     </div>
-                    <ul className="user-header__menu menu-user">
-                        <li className="menu-user__item">
-                            <a href="" className="menu-user__link">Account</a>
-                        </li>
-                        <li className="menu-user__item">
-                            <a href="" className="menu-user__link">Settings</a>
-                        </li>
-                        <li className="menu-user__item">
-                            <a href="" className="menu-user__link">My News</a>
-                        </li>
-                        <li className="menu-user__item">
-                            <a href="" className="menu-user__link">My Favorites</a>
-                        </li>
-                    </ul>
-
                 </div>
                 <button type="button" className="menu__icon icon-menu"><span></span></button>
             </div>

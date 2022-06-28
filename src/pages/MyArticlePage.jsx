@@ -30,7 +30,7 @@ export function MyArticlePage() {
          * 返回:
          * 参考 defaultArticleList
          */
-        axios.post("http://CHANGE_THIS.com", {
+        axios.post("http://192.168.50.31:8000/articles/my", {
             keyword: keyword,
         }).then(r => {
             setData(r.data);

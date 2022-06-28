@@ -1,7 +1,7 @@
 import {ContactUsCard} from "../components/ContactUsCard";
 import {Sidebar} from "../components/Sidebar";
 import {useEffect, useState} from "react";
-import {Button, Form, Input, message} from "antd";
+import {Button, Form, Image, Input, message} from "antd";
 import Dragger from "antd/lib/upload/Dragger";
 import {InboxOutlined} from '@ant-design/icons';
 import axios from "axios";
@@ -31,7 +31,7 @@ export function ArticleCreatePage() {
      *   }
      */
     function calculateSummary() {
-        axios.post("http://CHANGE_THIS.com", {
+        axios.post("http://192.168.50.31:8000/articles/calculateSummary", {
             title: title,
             content: content
         }).then(r => {
@@ -57,7 +57,7 @@ export function ArticleCreatePage() {
      *   ]
      */
     function calculateTags() {
-        axios.post("http://CHANGE_THIS.com", {
+        axios.post("http://192.168.50.31:8000/articles/calculateTags", {
             title: title,
             content: content
         }).then(r => {
@@ -86,14 +86,14 @@ export function ArticleCreatePage() {
      *   ]
      */
     function Submit() {
-        axios.post("http://CHANGE_THIS.com", {
+        axios.post("http://192.168.50.31:8000/articles/create", {
             title: title,
             content: content,
             url: fileList.length > 0 ? fileList[0].url : undefined,
             summary: summary,
             tags: tags
         }).then(r => {
-            setTags(r.data);
+            message.success("新建文章成功")
         }).catch(e => {
             message.error("保存文章接口网络错误: " + e.message);
         })
@@ -131,55 +131,59 @@ export function ArticleCreatePage() {
                     <div className="news-page">
                         <Form layout={"vertical"}>
                             <Form.Item label={"文章标题"}>
-                                <Dragger
-                                    style={{flex: 1}}
-                                    name="file"
-                                    multiple={false}
-                                    action={`http://换成上传图片的地址.com`}
-                                    onChange={info => {
-                                        const {status} = info.file;
-                                        if (status !== 'uploading') {
-                                            console.log(info.file, info.fileList);
-                                        }
-                                        if (status === 'done') {
-                                            message.success(`${info.file.name} 上传成功`);
-                                        } else if (status === 'error') {
-                                            message.error(`${info.file.name} 上传失败`);
-                                        }
-                                        let fileList = [...info.fileList];
-
-                                        // 1. Limit the number of uploaded files
-                                        // Only to show two recent uploaded files, and old ones will be replaced by the new
-                                        fileList = fileList.slice(-1);
-
-                                        // 2. Read from response and show file link
-                                        fileList = fileList.map(file => {
-                                            if (file.response) {
-                                                // Component will show file.url as link
-                                                file.url = file.response.url;
+                                <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
+                                    <Dragger
+                                        style={{flex: 1, width: 500}}
+                                        name="file"
+                                        multiple={false}
+                                        action={`http://192.168.50.31:8000/articles/fileUpload`}
+                                        onChange={info => {
+                                            const {status} = info.file;
+                                            if (status !== 'uploading') {
+                                                console.log(info.file, info.fileList);
                                             }
-                                            return file;
-                                        });
+                                            if (status === 'done') {
+                                                message.success(`${info.file.name} 上传成功`);
+                                            } else if (status === 'error') {
+                                                message.error(`${info.file.name} 上传失败`);
+                                            }
+                                            let fileList = [...info.fileList];
 
-                                        setFileList(fileList.concat([]));
-                                    }}
-                                    beforeUpload={file => {
-                                        if (file.type === 'image/jpeg' || file.type === 'image/png') {
-                                            return true;
-                                        } else {
-                                            message.error('请上传 jpeg/png 格式的照片');
-                                            return false;
-                                        }
-                                    }}
-                                    fileList={fileList}>
-                                    <div>
-                                        <p className="ant-upload-drag-icon">
-                                            <InboxOutlined/>
-                                        </p>
-                                        <p className="ant-upload-text">点击或者拖拽上传</p>
-                                        <p className="ant-upload-hint">请上传 png / jpeg 格式的地图文件</p>
-                                    </div>
-                                </Dragger>
+                                            // 1. Limit the number of uploaded files
+                                            // Only to show two recent uploaded files, and old ones will be replaced by the new
+                                            fileList = fileList.slice(-1);
+
+                                            // 2. Read from response and show file link
+                                            fileList = fileList.map(file => {
+                                                if (file.response) {
+                                                    // Component will show file.url as link
+                                                    file.url = file.response.url;
+                                                }
+                                                return file;
+                                            });
+
+                                            setFileList(fileList.concat([]));
+                                        }}
+                                        beforeUpload={file => {
+                                            if (file.type === 'image/jpeg' || file.type === 'image/png') {
+                                                return true;
+                                            } else {
+                                                message.error('请上传 jpeg/png 格式的照片');
+                                                return false;
+                                            }
+                                        }}
+                                        fileList={fileList}>
+                                        <div>
+                                            <p className="ant-upload-drag-icon">
+                                                <InboxOutlined/>
+                                            </p>
+                                            <p className="ant-upload-text">点击或者拖拽上传</p>
+                                            <p className="ant-upload-hint">请上传 png / jpeg 格式的地图文件</p>
+                                        </div>
+                                    </Dragger>
+                                    {fileList.map(i => <Image style={{width: 300}} key={i.url} src={i.url}/>)}
+                                </div>
+
                             </Form.Item>
                             <Form.Item label={"文章标题"}>
                                 <Input value={title} onChange={(e) => setTitle(e.target.value)}

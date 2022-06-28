@@ -44,7 +44,7 @@ export function HomePage() {
          * 返回:
          * 参考 defaultArticleList
          */
-        axios.post("http://CHANGE_THIS.com", {
+        axios.post("http://192.168.50.31:8000/articles/list", {
             tag: tag,
             keyword: keyword
         }).then(r => {

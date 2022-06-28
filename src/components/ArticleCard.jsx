@@ -12,7 +12,7 @@ export function ArticleCard(props) {
         <a href="#" className="item__image-ibg">
             <picture>
                 <source srcSet={article.thumbUrl} type="image/webp"/>
-                <img src={article.thumbUrl} alt="Samsung Galaxy"/>
+                <img src={article.thumbUrl} alt="url"/>
             </picture>
         </a>
         <div className="item__footer">

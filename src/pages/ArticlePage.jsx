@@ -25,7 +25,7 @@ export function ArticlePage() {
          * 返回:
          * 参考 defaultArticle
          */
-        axios.post("http://CHANGE_THIS.com", {
+        axios.post("http://192.168.50.31:8000/articles/find", {
             id: Number(params.id)
         }).then(r => {
             setData(r.data);
@@ -45,7 +45,7 @@ export function ArticlePage() {
          * 返回:
          * 参考 defaultArticleList
          */
-        axios.post("http://CHANGE_THIS.com", {
+        axios.post("http://192.168.50.31:8000/articles/related", {
             id: Number(params.id)
         }).then(r => {
             setSuggestArticles(r.data);
